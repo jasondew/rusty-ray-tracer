@@ -26,15 +26,22 @@ impl Color {
 impl Add<Color> for Color {
     type Output = Self;
     fn add(self, other: Self) -> Self {
-        Color::new(self.r * other.r, self.g * other.g, self.b * other.b)
+        Color::new(self.r + other.r, self.g + other.g, self.b + other.b)
     }
 }
 
 impl AddAssign<Color> for Color {
     fn add_assign(&mut self, other: Color) {
-        self.r *= other.r;
-        self.g *= other.g;
-        self.b *= other.b;
+        self.r += other.r;
+        self.g += other.g;
+        self.b += other.b;
+    }
+}
+
+impl Mul<Color> for f32 {
+    type Output = Color;
+    fn mul(self, color: Color) -> Color {
+        Color::new(color.r * self, color.g * self, color.b * self)
     }
 }
 

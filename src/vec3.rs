@@ -48,15 +48,22 @@ impl Vec3 {
 impl Add<Vec3> for Vec3 {
     type Output = Self;
     fn add(self, other: Self) -> Self {
-        Vec3::new(self.x * other.x, self.y * other.y, self.z * other.z)
+        Vec3::new(self.x + other.x, self.y + other.y, self.z + other.z)
     }
 }
 
 impl AddAssign<Vec3> for Vec3 {
     fn add_assign(&mut self, other: Vec3) {
-        self.x *= other.x;
-        self.y *= other.y;
-        self.z *= other.z;
+        self.x += other.x;
+        self.y += other.y;
+        self.z += other.z;
+    }
+}
+
+impl Mul<Vec3> for f32 {
+    type Output = Vec3;
+    fn mul(self, vec3: Vec3) -> Vec3 {
+        Vec3::new(vec3.x * self, vec3.y * self, vec3.z * self)
     }
 }
 
@@ -92,15 +99,16 @@ impl MulAssign<Vec3> for Vec3 {
 impl Div<f32> for Vec3 {
     type Output = Self;
     fn div(self, factor: f32) -> Self {
-        Vec3::new(self.x / factor, self.y / factor, self.z / factor)
+        (1.0 / factor) * self
     }
 }
 
 impl DivAssign<f32> for Vec3 {
     fn div_assign(&mut self, factor: f32) {
-        self.x /= factor;
-        self.y /= factor;
-        self.z /= factor;
+        let reciprocal = 1.0 / factor;
+        self.x *= reciprocal;
+        self.y *= reciprocal;
+        self.z *= reciprocal;
     }
 }
 
@@ -111,17 +119,17 @@ impl Neg for Vec3 {
     }
 }
 
-impl Sub<f32> for Vec3 {
+impl Sub<Vec3> for Vec3 {
     type Output = Self;
-    fn sub(self, factor: f32) -> Self {
-        Vec3::new(self.x - factor, self.y - factor, self.z - factor)
+    fn sub(self, other: Vec3) -> Self {
+        Vec3::new(self.x - other.x, self.y - other.y, self.z - other.z)
     }
 }
 
-impl SubAssign<f32> for Vec3 {
-    fn sub_assign(&mut self, factor: f32) {
-        self.x -= factor;
-        self.y -= factor;
-        self.z -= factor;
+impl SubAssign<Vec3> for Vec3 {
+    fn sub_assign(&mut self, other: Vec3) {
+        self.x -= other.x;
+        self.y -= other.y;
+        self.z -= other.z;
     }
 }
